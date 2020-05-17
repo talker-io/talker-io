@@ -1,0 +1,17 @@
+{
+  "name": "talker",
+  "version": "1.0.0",
+  "description": "A simple command line messaging app",
+  "main": "index.js",
+  "scripts": {
+    "talker": "server/server_run.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "ora": "^4.0.4",
+    "socket.io": "^2.3.0"
+  },
+  "keywords": [],
+  "author": "tarith",
+  "license": "ISC"
+}
