@@ -1,35 +1,29 @@
-// Steps of loading preload,test,load,main
+const ora = require('ora');
+const spinner = ora('Starting talker.io server').start();
+spinner.color = "cyan"
 
-function importing() {
+const config = require('./server_settings.js');
+const http = require('http').createServer();
+const logger = require('./modules/talker_logger')
+const io = require('socket.io')(http);
+const myip = require('my-ip');
+const ip = (myip(null, true));
 
-    const ora = require('ora');
-    const spinner = ora('Please wait').start;
+io.on('connection', (socket) => {
+    logger.message('Connected', 'green');
 
-    setTimeout(() => {
+    socket.on('message', (evt) => {
+        logger.message_nl(evt, 'cyan')
+        socket.broadcast.emit('message', evt)
+    })
+})
 
-        spinner.color = 'gray'
-        spinner.text = 'Please wait: importing packages'
-
-        const socket = require('socket');
-        const http = require('http').createServer();
-
-
-        setTimeout(()=>{
-            spinner.text = 'Please wait: imported packages'
-            spinner.color = 'green'
-        },500)
-    },1000)
-
-
-
-}
-
-function preload() {}
-
-function test() {}
-function load() {}
-function main() {}
-
-
-
-importing()
+io.on('disconnect', (evt) => {
+    logger.message('Disconnected', 'pink')
+})
+setTimeout(()=>{
+    http.listen(config.port, () => {
+        spinner.stop();
+        logger.message_nl(`Server listening on ${ip}:${config.port}`, 'green')
+    })
+},1000)
