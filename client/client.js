@@ -67,7 +67,9 @@ function main(socket) {
     });
 
     socket.on('connect_failed', function(){
-        message.log('The server shutdown unexpectedly', 'magenta');
+        logger.message('The server shutdown unexpectedly', 'red');
         process.exit();
     });
+
+
 }

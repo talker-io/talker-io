@@ -8,6 +8,8 @@ const logger = require('./modules/talker_logger')
 const io = require('socket.io')(http);
 const myip = require('my-ip');
 const ip = (myip(null, true));
+const prompt = require('prompt-sync')();
+
 
 
 
@@ -21,14 +23,17 @@ io.on('connection', (socket) => {
         logger.message_nl(`New user connected as ${socket.ip}`, config.new_connection_color);
     }
     else if(config.Do_not_log == false & config.show_time == true){
-        logger.message_nl(`${logger.date("yearmonthdatetime")} New user connected`, config.new_connection_color);
+        logger.message_nl(`${logger.date("yearmonthdatetime")} New user connected Total users ${userupdate()}`, config.new_connection_color);
     }
 
 
 
     socket.on('message', (evt) => {
         if (config.Do_not_log == true){
-            socket.broadcast.emit('message', evt);
+            let {cmd, username} = evt;
+            var message = cmd.substring(0,config.room_message_maxLength);
+            var bigmessage = {message, username}
+            socket.broadcast.emit('message', bigmessage);
         }
         else{
             let {cmd, username} = evt;
@@ -50,6 +55,9 @@ io.on('connection', (socket) => {
         }
     })
 
+    function userupdate() {
+        return Object.keys(io.sockets.connected).length
+    }
 
 })
 
@@ -60,3 +68,4 @@ setTimeout(()=>{
         logger.message_nl(`Server listening on ${ip}:${config.port}`, 'green')
     })
 },1000)
+
