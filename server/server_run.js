@@ -32,8 +32,8 @@ io.on('connection', (socket) => {
         }
         else{
             let {cmd, username} = evt;
-            message = cmd.substring(0,config.room_message_maxLength);
-            bigmessage = {message, username}
+            var message = cmd.substring(0,config.room_message_maxLength);
+            var bigmessage = {message, username}
             logger.message_nl(`${logger.date("ymdhms")} New message by ${username} message: ${cmd}`, config.new_message_color);
             socket.broadcast.emit('message', bigmessage);
 
