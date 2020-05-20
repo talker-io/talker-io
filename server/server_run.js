@@ -5,25 +5,25 @@ spinner.color = "cyan"
 const config = require('./server_settings.js');
 const http = require('http').createServer();
 const logger = require('./modules/talker_logger')
-const io = require('socket.io')(http);
+const io = require('socket.io')(http)
 const myip = require('my-ip');
 const ip = (myip(null, true));
-const prompt = require('prompt-sync')();
-
-
-
-
-
 
 
 io.on('connection', (socket) => {
     //sends connection data
-    socket.emit('connection_info',{name: config.room_name, description: config.room_description, website: config.room_website ,maxLength: config.room_message_maxLength})
+    socket.emit('connection_info',{
+        name: config.room_name,
+        description: config.room_description,
+        website: config.room_website,
+        maxLength: config.room_message_maxLength
+    })
     if(config.Do_not_log == false & config.show_time == false){
         logger.message_nl(`New user connected as ${socket.ip}`, config.new_connection_color);
     }
     else if(config.Do_not_log == false & config.show_time == true){
         logger.message_nl(`${logger.date("yearmonthdatetime")} New user connected Total users ${userupdate()}`, config.new_connection_color);
+
     }
 
 
@@ -39,7 +39,7 @@ io.on('connection', (socket) => {
             let {cmd, username} = evt;
             var message = cmd.substring(0,config.room_message_maxLength);
             var bigmessage = {message, username}
-            logger.message_nl(`${logger.date("ymdhms")} New message by ${username} message: ${cmd}`, config.new_message_color);
+            logger.message_nl(`${logger.date("ymdhms")} New message by ${username} message: ${cmd} trimied message: ${message}`, config.new_message_color);
             socket.broadcast.emit('message', bigmessage);
 
         }
@@ -63,9 +63,10 @@ io.on('connection', (socket) => {
 
 
 setTimeout(()=>{
-    http.listen(config.port, () => {
+    http.listen(config.room_port, () => {
         spinner.stop();
-        logger.message_nl(`Server listening on ${ip}:${config.port}`, 'green')
+        logger.message_nl(`Server listening on ${ip}:${config.room_port}`, 'green')
     })
 },1000)
+
 

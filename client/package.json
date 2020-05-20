@@ -1,0 +1,12 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "dependencies": {
+    "monitor.io": "^0.1.0",
+    "node-notifier": "^7.0.0",
+    "prompt": "^1.0.0"
+  },
+  "devDependencies": {
+    "prompts": "^2.3.2"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "talker-io",
+  "version": "1.0.0",
+  "description": "A simple command line messaging app",
+  "main": "index.js",
+  "scripts": {
+    "talker": "server_run.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "cors": "^2.8.5",
+    "express-session": "^1.17.1",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "errorhandler": "^1.5.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.15",
+    "morgan": "^1.10.0",
+    "my-ip": "^1.1.1",
+    "ora": "^4.0.4",
+    "passport-local": "^1.0.0",
+    "prompt": "^1.0.0",
+    "socket.io": "^2.3.0",
+    "terminal-kit": "^1.35.2",
+    "monitor.io": "^0.1.0"
+  },
+  "keywords": [],
+  "author": "tarith",
+  "license": "ISC"
+}

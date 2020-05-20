@@ -1,9 +1,17 @@
+
+if (require.main === module){
+    console.log("Please edit server_settings.js to change server settings\nrunning this file wont do anything")
+}
+
 //room settings
 const room_name = 'testing room'
 const room_description = 'This is a demo description'
-const room_website = ''//leave empty if you dont want to send your rooms website
-const room_message_maxLength = 20
-const port = "8080"
+const room_website = 'https://test.com'//leave empty if you dont want to send your rooms website
+const room_message_maxLength = 160
+const room_port = "8080"
+
+//monitoring
+const monitoring_port = "8000"
 
 //logger settings
 const Do_not_log = false                 // default false
@@ -13,13 +21,15 @@ const disconnect_color = "pink"          // available colors: red,blue,green,yel
 const show_time = true                   //default true
 
 
+
 //DO NOT CHANGE
 module.exports = {
     room_name,
     room_description,
     room_website,
     room_message_maxLength,
-    port,
+    room_port,
+    monitoring_port,
     Do_not_log,
     new_message_color,
     new_connection_color,

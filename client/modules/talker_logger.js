@@ -1,3 +1,8 @@
+
+if (require.main === module){
+    console.log("This module wont run by itself");
+}
+
 // requirements
 
 const date_ob = new Date()
