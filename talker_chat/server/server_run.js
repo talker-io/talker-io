@@ -47,11 +47,14 @@ io.on('connection', (socket) => {
 
 
 
-    socket.on('disconnect', () => {
+    socket.on('disconnect', (data) => {
         if (config.Do_not_log == false & config.show_time == false) {
             logger.message_nl('A user disconnected', config.disconnect_color)
+            socket.broadcast.emit('userDisconnected', data.username)
+
         } else if (config.Do_not_log == false & config.show_time == true) {
             logger.message_nl(`${logger.date("ymdhms")} A user disconnected`, config.disconnect_color)
+            socket.broadcast.emit('userDisconnected', data.username)
         }
     })
 

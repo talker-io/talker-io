@@ -7,12 +7,12 @@ const repl = require('repl');
 const logger = require('./modules/talker_logger');
 const notification = require('node-notifier');
 let username = null
-let info_enabled = null
+let options = null
 const prompt = require("prompts")
 const promptTemplates = require("./modules/promptTemplates")
 
 username = process.argv[2]
-info_enabled = process.argv[3]
+options = process.argv[3]
 
 
 spinner.color = "cyan";
@@ -22,32 +22,11 @@ spinner.color = "cyan";
 function main(socket, data) {
 
     spinner.stop()
+
+    //Sends disconnect message
     socket.on('disconnect', function () {
-        socket.emit('disconnect')
+        socket.emit('disconnect', username)
     });
-
-/*
-    //connection information
-    socket.on('connection_info',(data) => {
-        global.data = data
-        let room_name = data.name;
-        let room_description = data.description;
-        let room_maxLength = data.maxLength;
-        let room_website = data.website;
-
-
-        logger.message_nl(`\n=== Welcome to ${room_name} ===\n  ${room_description}\nType your message and press Enter to send\n`, 'yellow');
-        if (room_website == "") {}
-            else
-         {
-            logger.message_nl(`Website: ${room_website}\n`, 'yellow')
-        }
-        if (info_enabled == "true") {
-            logger.message_nl(`${room_name} info\n room name: ${room_name}\n room description: ${room_description}\n room max message size: ${room_maxLength}\n room website: ${room_website}\n`, 'bold')
-        }
-    })*/
-
-
 
     //connect
     socket.on('connect', () => {});
@@ -74,6 +53,11 @@ function main(socket, data) {
         }
     });
 
+    //listens for userDisconnected
+    socket.on('userDisconnected', function (data) {
+        logger.message_nl(`someone disconnected`, 'red')
+    })
+
     socket.on('connect_failed', function(){
         logger.message('The server shutdown unexpectedly', 'red');
         process.exit();
@@ -87,10 +71,13 @@ async function connectionCheck(socket) {
      socket.on('connection_info', (data) => {
 
          //runs if data form server is invalid
-         if (validator.validate(data) == false){
+         if (validator.validate(data) === false){
+
              //runs when data is invalid
              spinner.stop()
              logger.message_nl('The server you are trying to connect to is sending information that is invalid\nor is bypassing a limit rule\nPlease proceed with caution\n', 'magenta');
+
+
              (async () => {
                  const response = await prompt(promptTemplates.proceed);
                  if (response.value === true) {
@@ -99,24 +86,51 @@ async function connectionCheck(socket) {
                      let room_maxLength = data.maxLength;
                      let room_website = data.website;
                      const datajson = JSON.stringify(data)
+
+
                      logger.message_nl(`\n=== Welcome to ${room_name} ===\n  ${room_description}\nType your message and press Enter to send\n`, 'yellow');
                      if (room_website === "") {}
                      else {
                          logger.message_nl(`Website: ${room_website}\n`, 'yellow')
                      }
-                     if (info_enabled === "true") {
-                         logger.message_nl(`${room_name} info\n room name: ${room_name}\n room description: ${room_description}\n room max message size: ${room_maxLength}\n room website: ${room_website} other data: ${datajson}` , 'bold')
+
+                     // info option
+                     if (options === "info") {
+                         logger.message_nl(`${room_name} info\n room name: ${room_name}\n room description: ${room_description}\n room max message size: ${room_maxLength}\n room website: ${room_website}` , 'bold')
 
                          main(socket, data)
                      }
+
+                     // name option
+                     else if(options === "name"){
+                         logger.message_nl(`\nroom name: ${room_name}` , 'bold')
+
+                     }
+
+                     // description option
+                     else if(options === "description"){
+                         logger.message_nl(`\nroom description: ${room_description}` , 'bold')
+
+                     }
+
+                     // message size option
+                     else if(options === "messagesize"){
+                         logger.message_nl(`\nroom max message length: ${room_maxLength}` , 'bold')
+                     }
+
+                     // other option
+                     else if(options === "other"){
+                         logger.message_nl(`\nroom other information: ${datajson}` , 'bold')
+                     }
+
                      else {
                          main(socket, data)
                      }
-
                  }
                  else if (response.value === false) {
                      process.exit(22);
-                 } else {
+                 }
+                 else {
                      process.exit(44)
                  }
              })()
@@ -124,6 +138,7 @@ async function connectionCheck(socket) {
 
          // runs when data from server is valid
          else{
+                 spinner.stop()
                  let room_name = data.name;
                  let room_description = data.description;
                  let room_maxLength = data.maxLength;
@@ -134,14 +149,43 @@ async function connectionCheck(socket) {
                  else {
                      logger.message_nl(`Website: ${room_website}\n`, 'yellow')
                  }
-                 if (info_enabled === "true") {
-                     logger.message_nl(`${room_name} info\n room name: ${room_name}\n room description: ${room_description}\n room max message size: ${room_maxLength}\n room website: ${room_website} other data: ${datajson}`, 'bold')
-                     main(socket, data)
-                 }
-                 else {
-                     main(socket, data)
-                 }
+
+
+                // info option
+                if (options === "info") {
+                 logger.message_nl(`${room_name} info\n room name: ${room_name}\n room description: ${room_description}\n room max message size: ${room_maxLength}\n room website: ${room_website}` , 'bold')
+
+                 main(socket, data)
              }
+
+                // name option
+                else if(options === "name"){
+                 logger.message_nl(`\nroom name: ${room_name}` , 'bold')
+
+             }
+
+                // description option
+                else if(options === "description"){
+                 logger.message_nl(`\nroom description: ${room_description}` , 'bold')
+
+             }
+
+                // message size option
+                else if(options === "messagesize"){
+                 logger.message_nl(`\nroom max message length: ${room_maxLength}` , 'bold')
+             }
+
+                // other option
+                else if(options === "other"){
+                 logger.message_nl(`\nroom other information: ${datajson}` , 'bold')
+             }
+
+                //no option
+                else {
+                 main(socket, data)
+             }
+
+          }
     })
 }
 

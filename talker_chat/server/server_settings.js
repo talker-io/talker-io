@@ -10,8 +10,6 @@ const room_website = 'https://test.com'//leave empty if you dont want to send yo
 const room_message_maxLength = 160
 const room_port = "8080"
 
-//monitoring
-const monitoring_port = "8000"
 
 //logger settings
 const Do_not_log = false                 // default false
@@ -29,7 +27,6 @@ module.exports = {
     room_website,
     room_message_maxLength,
     room_port,
-    monitoring_port,
     Do_not_log,
     new_message_color,
     new_connection_color,
