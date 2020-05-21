@@ -1,5 +1,5 @@
 //This is the config file of talker-io client
 
-const roomip = "http://localhost:8080"
+const server_ip = "http://localhost:8080"
 
-module.exports = {roomip}
+module.exports = {server_ip}

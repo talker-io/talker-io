@@ -3,12 +3,13 @@ if (require.main === module){
     console.log("Please edit server_settings.js to change server settings\nrunning this file wont do anything")
 }
 
-//room settings
-const room_name = 'testing room'
-const room_description = 'This is a demo description'
-const room_website = 'https://test.com'//leave empty if you dont want to send your rooms website
-const room_message_maxLength = 160
-const room_port = "8080"
+//server settings
+const server_name = 'testing server'
+const server_description = 'This is a demo description'
+const server_website = 'https://test.com'//leave empty if you dont want to send your server's website
+const server_message_maxLength = 160
+const server_port = "8080"
+const server_location = ""// if wanted you can enter the location of the server
 
 
 //logger settings
@@ -22,11 +23,12 @@ const show_time = true                   //default true
 
 //DO NOT CHANGE
 module.exports = {
-    room_name,
-    room_description,
-    room_website,
-    room_message_maxLength,
-    room_port,
+    server_name,
+    server_description,
+    server_website,
+    server_message_maxLength,
+    server_port,
+    server_location,
     Do_not_log,
     new_message_color,
     new_connection_color,

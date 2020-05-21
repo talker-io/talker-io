@@ -3,11 +3,16 @@
   "version": "1.0.0",
   "description": "A simple command line messaging app",
   "main": "index.js",
-  "scripts": {
-    "talker": "server_run.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "bin": {
+    "talker-io-server": "./server_run.js"
   },
-  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
+  "pkg": {
+    "scripts": "./modules/**/*.js"
+  },
+  "scripts": {
+    "start": "npm start"
+
+  },
   "devDependencies": {
     "cors": "^2.8.5",
     "express-session": "^1.17.1",
@@ -18,14 +23,15 @@
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
     "mongoose": "^5.9.15",
+    "monitor.io": "^0.1.0",
     "morgan": "^1.10.0",
     "my-ip": "^1.1.1",
+    "nexe": "^3.3.2",
     "ora": "^4.0.4",
     "passport-local": "^1.0.0",
     "prompt": "^1.0.0",
     "socket.io": "^2.3.0",
-    "terminal-kit": "^1.35.2",
-    "monitor.io": "^0.1.0"
+    "terminal-kit": "^1.35.2"
   },
   "keywords": [],
   "author": "tarith",

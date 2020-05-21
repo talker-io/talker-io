@@ -10,6 +10,7 @@ let username = null
 let options = null
 const prompt = require("prompts")
 const promptTemplates = require("./modules/promptTemplates")
+const ipLocation = require("ip-location")
 
 username = process.argv[2]
 options = process.argv[3]
@@ -19,7 +20,7 @@ spinner.color = "cyan";
 
 
 // main function
-function main(socket, data) {
+function main(socket, serverdata) {
 
     spinner.stop()
 
@@ -35,10 +36,12 @@ function main(socket, data) {
     socket.on('message', (data) => {
         const {message, username} = data
         logger.message(username + ': ' + message.split('\n')[0] + "\n", 'green');
+
+        // notifications
         var notification_message = (`${username}: ${message}`)
-        notification_message = notification_message.substring(0, notification_message.length /*-1*/)
+        notification_message = notification_message.substring(0, notification_message.length -1)
         notification.notify({
-            title: 'New message',
+            title: `talker.io ${serverdata.name}`,
             message: notification_message,
             sound: true,
         })
@@ -68,130 +71,171 @@ function main(socket, data) {
 
 // connection check
 async function connectionCheck(socket) {
-     socket.on('connection_info', (data) => {
+    socket.on('connection_info', (data) => {
 
-         //runs if data form server is invalid
-         if (validator.validate(data) === false){
+        //runs if data form server is invalid
+        if (validator.validate(data) === false){
 
-             //runs when data is invalid
-             spinner.stop()
-             logger.message_nl('The server you are trying to connect to is sending information that is invalid\nor is bypassing a limit rule\nPlease proceed with caution\n', 'magenta');
-
-
-             (async () => {
-                 const response = await prompt(promptTemplates.proceed);
-                 if (response.value === true) {
-                     let room_name = data.name;
-                     let room_description = data.description;
-                     let room_maxLength = data.maxLength;
-                     let room_website = data.website;
-                     const datajson = JSON.stringify(data)
+            //runs when data is invalid
+            spinner.stop()
+            logger.message_nl('The server you are trying to connect\nis sending information that is invalid\nor is sending data thats too big\nPlease proceed with caution\n', 'magenta');
 
 
-                     logger.message_nl(`\n=== Welcome to ${room_name} ===\n  ${room_description}\nType your message and press Enter to send\n`, 'yellow');
-                     if (room_website === "") {}
-                     else {
-                         logger.message_nl(`Website: ${room_website}\n`, 'yellow')
-                     }
-
-                     // info option
-                     if (options === "info") {
-                         logger.message_nl(`${room_name} info\n room name: ${room_name}\n room description: ${room_description}\n room max message size: ${room_maxLength}\n room website: ${room_website}` , 'bold')
-
-                         main(socket, data)
-                     }
-
-                     // name option
-                     else if(options === "name"){
-                         logger.message_nl(`\nroom name: ${room_name}` , 'bold')
-
-                     }
-
-                     // description option
-                     else if(options === "description"){
-                         logger.message_nl(`\nroom description: ${room_description}` , 'bold')
-
-                     }
-
-                     // message size option
-                     else if(options === "messagesize"){
-                         logger.message_nl(`\nroom max message length: ${room_maxLength}` , 'bold')
-                     }
-
-                     // other option
-                     else if(options === "other"){
-                         logger.message_nl(`\nroom other information: ${datajson}` , 'bold')
-                     }
-
-                     else {
-                         main(socket, data)
-                     }
-                 }
-                 else if (response.value === false) {
-                     process.exit(22);
-                 }
-                 else {
-                     process.exit(44)
-                 }
-             })()
-         }
-
-         // runs when data from server is valid
-         else{
-                 spinner.stop()
-                 let room_name = data.name;
-                 let room_description = data.description;
-                 let room_maxLength = data.maxLength;
-                 let room_website = data.website;
-                 const datajson = JSON.stringify(data)
-                 logger.message_nl(`\n=== Welcome to ${room_name} ===\n  ${room_description}\nType your message and press Enter to send\n`, 'yellow');
-                 if (room_website === "") {}
-                 else {
-                     logger.message_nl(`Website: ${room_website}\n`, 'yellow')
-                 }
+            (async () => {
+                const response = await prompt(promptTemplates.proceed);
+                if (response.value === true) {
+                    let server_name = data.name;
+                    let server_description = data.description;
+                    let server_maxLength = data.maxLength;
+                    let server_website = data.website;
 
 
-                // info option
-                if (options === "info") {
-                 logger.message_nl(`${room_name} info\n room name: ${room_name}\n room description: ${room_description}\n room max message size: ${room_maxLength}\n room website: ${room_website}` , 'bold')
+                    logger.message_nl(`\n=== Welcome to ${server_name} ===\n  ${server_description}\nType your message and press Enter to send\n`, 'yellow');
 
-                 main(socket, data)
-             }
+                    // if server has a website display
+                    if (server_website === "") {}
+                    else {
+                        logger.message_nl(`Website: ${server_website}\n`, 'yellow')
+                    }
 
-                // name option
-                else if(options === "name"){
-                 logger.message_nl(`\nroom name: ${room_name}` , 'bold')
+                    // if servers max length is under 10 display max length to user
+                    if (server_maxLength < 10){
+                        logger.message_nl(`This servers max message size is ${server_maxLength}`)
+                    }
+                    else{}
 
-             }
-
-                // description option
-                else if(options === "description"){
-                 logger.message_nl(`\nroom description: ${room_description}` , 'bold')
-
-             }
-
-                // message size option
-                else if(options === "messagesize"){
-                 logger.message_nl(`\nroom max message length: ${room_maxLength}` , 'bold')
-             }
-
-                // other option
-                else if(options === "other"){
-                 logger.message_nl(`\nroom other information: ${datajson}` , 'bold')
-             }
-
-                //no option
+                    option(socket, data)
+                }
+                else if (response.value === false) {
+                    process.exit(22);
+                }
                 else {
-                 main(socket, data)
-             }
+                    process.exit(44)
+                }
+            })()
+        }
 
-          }
+        // runs when data from server is valid
+        else{
+            spinner.stop()
+            let server_name = data.name;
+            let server_description = data.description;
+            let server_maxLength = data.maxLength;
+            let server_website = data.website;
+            const datajson = JSON.stringify(data)
+            logger.message_nl(`\n=== Welcome to ${server_name} ===\n  ${server_description}\nType your message and press Enter to send\n`, 'yellow');
+
+            // if server has a website display
+            if (server_website === "") {}
+            else {
+                logger.message_nl(`Website: ${server_website}\n`, 'yellow')
+            }
+
+            // if servers max length is under 10 display max length to user
+            if (server_maxLength < 10){
+                logger.message_nl(`This servers max message size is ${server_maxLength}`)
+            }
+            else{}
+
+            option(socket, data)
+
+
+
+
+        }
     })
+}
+
+// options
+function option(socket, data){
+    let server_name = data.name;
+    let server_description = data.description;
+    let server_maxLength = data.maxLength;
+    let server_website = data.website;
+    let server_location = data.location;
+    let server_total_users = data.userCount
+    const data_json = JSON.stringify(data);
+
+    // info option
+    if (options === "info") {
+        logger.message_nl(`${server_name}'s info\n server name: ${server_name}\n server description: ${server_description}\n server max message size: ${server_maxLength}\n server website: ${server_website}\nuse other option for other data` , 'bold')
+
+        main(socket, data)
+    }
+
+    // name option
+    else if(options === "name"){
+        logger.message_nl(`\nserver name: ${server_name}` , 'bold')
+        process.exit(0)
+    }
+
+    // description option
+    else if(options === "description"){
+        logger.message_nl(`\n${server_name}'s description: ${server_description}` , 'bold')
+        process.exit(0)
+    }
+
+    // message size option
+    else if(options === "messagesize"){
+        logger.message_nl(`\n${server_name}'s max message length: ${server_maxLength}` , 'bold')
+        process.exit(0)
+    }
+
+    // other option
+    else if(options === "other"){
+        logger.message_nl(`\n${server_name}'s other information:\n${data_json}` , 'bold')
+        logger.message_nl("If some of these information is not showing when using \"info\" option that means that you are using a old version or the server is sending unwanted data" , 'bold')
+        process.exit(0)
+    }
+    
+    // country option
+    else if(options === "location"){
+
+        // runs when server didnt send the location
+        if (typeof(server_location) === undefined || typeof(server_location) !== "string" || server_location === ""){
+            logger.message_nl(`\nThis server didnt provide its location` , 'bold')
+            process.exit(0)
+        }
+
+        // runs when server sent the location
+        else{
+            logger.message_nl(`server's location: ${server_location}` , 'bold')
+            process.exit(0)
+        }
+    }
+
+    // current user count option
+    else if(options === "total") {
+
+        // runs when server didnt send total number of users
+        if (typeof (server_total_users) === undefined || typeof (server_total_users) !== "number") {
+            logger.message_nl(`\nThis server didnt provide its current user count`, 'bold')
+            process.exit(0)
+        }
+
+        // runs when server sent the total number of users
+        else {
+            (async () => {
+                logger.message_nl(`server's current number of users: ${server_total_users - 1} (without current connection)`, 'bold')
+                await socket.emit('disconnect', username)
+                setTimeout(() => {
+                    process.exit(0)
+                }, 10);
+            })()
+        }
+
+    }
+
+    //no option
+    else {
+        main(socket, data)
+    }
+
 }
 
 
 setTimeout(()=>{
     spinner.text = "connecting to server"
-    const socket = require('socket.io-client')(config.roomip);
+    const socket = require('socket.io-client')(config.server_ip);
     connectionCheck(socket)
 },1000)
