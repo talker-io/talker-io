@@ -10,7 +10,7 @@ with the command `node server_run.js`.
 If you want you can edit the server_settings.js file to configure your server.
 
 ROOM SETTINGS
-[#1. room_name](#1-room_name)
+[1. room_name](#1-room_name)
 [2. room_description](#2-room_description)
 [3. room_website](#3-room_website)
 [4. room_message_maxlength](#4-room_message_maxlength)
