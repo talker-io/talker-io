@@ -74,21 +74,21 @@ Default - cyan
 
 
 
-#### (6. new_connection_color)
+#### (7. new_connection_color)
 The color that will be used when logging connections.
 This can be red,blue,green,yellow,black.white.bold,none,cyan,magenta,gray,pink
 Default - green
 
 
 
-#### (7. disconnect_color)
+#### (8. disconnect_color)
 The color that will be used when logging connections.
 This can be red,blue,green,yellow,black.white.bold,none,cyan,magenta,gray,pink
 Default - red
 
 
 
-#### (8. show_time)
+#### (9. show_time)
 When enabled the events time will be showed.
 This can be true or false
 Default - true
