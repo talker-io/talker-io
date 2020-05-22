@@ -10,18 +10,18 @@ with the command `node server_run.js`.
 If you want you can edit the server_settings.js file to configure your server.
 
 ROOM SETTINGS
-[#1. room_name](#(2.-room_name))
-2. room_description
-3. room_website
-4. room_message_maxlength
-5. room_port
+[#1. room_name](#1-room_name)
+[2. room_description](#2-room_description)
+[3. room_website](#3-room_website)
+[4. room_message_maxlength](#4-room_message_maxlength)
+[5. room_port](#5-room_port)
 
 
 LOGGER SETTINGS
-1. Do_not_log
-2. new_message_color
-3. disconnect_color
-4. show_time
+[1. Do_not_log](#6-do_not_log)
+[2. new_message_color](#7-new_messgae_color)
+[3. disconnect_color](#8-disconnect_color)
+[4. show_time](#9-show_time)
 
 
 #### (1. room_name)
