@@ -18,10 +18,10 @@ ROOM SETTINGS
 
 
 LOGGER SETTINGS
-6. Do_not_log
-7. new_message_color
-8. disconnect_color
-9. show_time
+1. Do_not_log
+2. new_message_color
+3. disconnect_color
+4. show_time
 
 
 #### (1. room_name)
