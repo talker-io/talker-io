@@ -56,9 +56,15 @@ function main(socket, serverdata) {
         }
     });
 
+    socket.on('newUser', function (data) {
+        currentUsers = data.currentUsers
+        logger.message_nl(`New user connected Total users ${currentUsers}`, 'green')
+    })
+
     //listens for userDisconnected
     socket.on('userDisconnected', function (data) {
-        logger.message_nl(`someone disconnected`, 'red')
+        currentUsers = data.currentUsers
+        logger.message_nl(`someone disconnected. Total users ${currentUsers}`, 'red')
     })
 
     socket.on('connect_failed', function(){
@@ -153,8 +159,11 @@ function option(socket, data){
     let server_maxLength = data.maxLength;
     let server_website = data.website;
     let server_location = data.location;
-    let server_total_users = data.userCount
+    let server_language = data.language;
+    let server_total_users = data.userCount;
     const data_json = JSON.stringify(data);
+
+
 
     // info option
     if (options === "info") {
@@ -165,42 +174,74 @@ function option(socket, data){
 
     // name option
     else if(options === "name"){
-        logger.message_nl(`\nserver name: ${server_name}` , 'bold')
-        process.exit(0)
+        (async () => {
+            logger.message_nl(`\nserver name: ${server_name}` , 'bold')
+            await socket.emit('disconnect', username)
+            setTimeout(() => {
+                process.exit(0)
+            }, 10);
+        })()
     }
 
     // description option
     else if(options === "description"){
-        logger.message_nl(`\n${server_name}'s description: ${server_description}` , 'bold')
-        process.exit(0)
+        (async () => {
+            logger.message_nl(`\n${server_name}'s description: ${server_description}` , 'bold')
+            await socket.emit('disconnect', username)
+            setTimeout(() => {
+                process.exit(0)
+            }, 10);
+        })()
     }
 
     // message size option
     else if(options === "messagesize"){
-        logger.message_nl(`\n${server_name}'s max message length: ${server_maxLength}` , 'bold')
-        process.exit(0)
+        (async () => {
+            logger.message_nl(`\n${server_name}'s max message length: ${server_maxLength}` , 'bold')
+
+            await socket.emit('disconnect', username)
+            setTimeout(() => {
+                process.exit(0)
+            }, 10);
+        })()
     }
 
     // other option
     else if(options === "other"){
-        logger.message_nl(`\n${server_name}'s other information:\n${data_json}` , 'bold')
-        logger.message_nl("If some of these information is not showing when using \"info\" option that means that you are using a old version or the server is sending unwanted data" , 'bold')
-        process.exit(0)
+        (async () => {
+            logger.message_nl(`\n${server_name}'s other information:\n${data_json}` , 'bold')
+            logger.message_nl("If some of these information is not showing when using \"info\" option that means that you are using a old version or the server is sending unwanted data" , 'bold')
+
+            await socket.emit('disconnect', username)
+            setTimeout(() => {
+                process.exit(0)
+            }, 10);
+        })()
     }
-    
+
     // country option
     else if(options === "location"){
 
         // runs when server didnt send the location
         if (typeof(server_location) === undefined || typeof(server_location) !== "string" || server_location === ""){
-            logger.message_nl(`\nThis server didnt provide its location` , 'bold')
-            process.exit(0)
+            (async () => {
+                logger.message_nl(`\nThis server didnt provide its location` , 'bold')
+                await socket.emit('disconnect', username)
+                setTimeout(() => {
+                    process.exit(0)
+                }, 10);
+            })()
         }
 
         // runs when server sent the location
         else{
-            logger.message_nl(`server's location: ${server_location}` , 'bold')
-            process.exit(0)
+            (async () => {
+                logger.message_nl(`server's location: ${server_location}` , 'bold')
+                await socket.emit('disconnect', username)
+                setTimeout(() => {
+                    process.exit(0)
+                }, 10);
+            })()
         }
     }
 
@@ -209,8 +250,13 @@ function option(socket, data){
 
         // runs when server didnt send total number of users
         if (typeof (server_total_users) === undefined || typeof (server_total_users) !== "number") {
-            logger.message_nl(`\nThis server didnt provide its current user count`, 'bold')
-            process.exit(0)
+            (async () => {
+                logger.message_nl(`\nThis server didnt provide its current user count`, 'bold')
+                await socket.emit('disconnect', username)
+                setTimeout(() => {
+                    process.exit(0)
+                }, 10);
+            })()
         }
 
         // runs when server sent the total number of users
@@ -224,6 +270,18 @@ function option(socket, data){
             })()
         }
 
+    }
+
+    // language option
+    else if(options === "language"){
+        (async () => {
+            logger.message_nl(`\n${server_name}'s language: ${server_language}` , 'bold')
+
+            await socket.emit('disconnect', username)
+            setTimeout(() => {
+                process.exit(0)
+            }, 10);
+        })()
     }
 
     //no option
