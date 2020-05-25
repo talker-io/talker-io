@@ -1,0 +1,54 @@
+
+
+<head>
+    <title>Live Analytics</title>
+    <meta http-equiv="refresh" content="8">
+</head>
+
+<body>
+
+    <style type="text/css">
+        .tg  {border-collapse:collapse;border-spacing:0;}
+        .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+            overflow:hidden;padding:10px 20px;word-break:normal;}
+        .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+            font-weight:normal;overflow:hidden;padding:10px 20px;word-break:normal;}
+        .tg .tg-fuxe{border-color:inherit;font-size:18px;text-align:left;vertical-align:top}
+    </style>
+    <table class="tg" style="undefined;table-layout: fixed; width: 548px">
+        <colgroup>
+        <col style="width: 238px">
+        <col style="width: 310px">
+    </colgroup>
+        <thead>
+    <tr>
+        <th class="tg-fuxe">Server name</th>
+        <th class="tg-fuxe"> <%= name %></th>
+    </tr>
+    </thead>
+        <tbody>
+    <tr>
+        <td class="tg-fuxe">Description</td>
+        <td class="tg-fuxe"><%= description%></td>
+    </tr>
+    <tr>
+        <td class="tg-fuxe">Website</td>
+        <td class="tg-fuxe"><%= website%></td>
+    </tr>
+    <tr>
+        <td class="tg-fuxe">max message length</td>
+        <td class="tg-fuxe"><%= maxLength%></td>
+    </tr>
+    <tr>
+        <td class="tg-fuxe">location</td>
+        <td class="tg-fuxe"><%= location%></td>
+    </tr>
+    <tr>
+        <td class="tg-fuxe">online users</td>
+        <td class="tg-fuxe"><%= currentUsers%></td>
+    </tr>
+
+    </tbody>
+    </table>
+
+</body>

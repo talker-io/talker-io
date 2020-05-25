@@ -23,9 +23,14 @@ const location = server_config.server_location
 let language = server_config.server_language
 let lastConnection = 0
 
+
 // http server
-const http = require('http').createServer(handler);
-const io = require('socket.io')(http)
+const http = require('http')/*.createServer(handler)*/;
+const express = require('express');
+const app = express();
+
+const server = http.createServer(app)
+const io = require('socket.io')(server);
 
 
 const JSONconfig = JSON.stringify(server_config)
@@ -35,59 +40,6 @@ function userupdate() {
 }
 
 
-function handler (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.end(`
-<head>
-<title>${server_config.server_name} Analytics</title>
-<meta http-equiv="refresh" content="8">
-</head>
-<table style="undefined;table-layout: fixed; width: 548px">
-<colgroup>
-<col style="width: 238px">
-<col style="width: 310px">
-</colgroup>
-<col style="width: 238px">
-<col style="width: 50px">
-</colgroup>
-<thead>
-
-</thead>
-<tbody>
-<tr>
-<td>Server name</td>
-<td>${name}</td>
-</th></tr>
-<tr>
-<td>Description</td><td>${description}</td>
-</tr><tr>
-<td>Website</td><td>${website}</td>
-</tr><tr>
-<td>max message length</td><td>${maxLength}</td>
-</tr><tr>
-<td>location</td><td>${location}</td>
-</tr><tr>
-<td>Language</td><td>${language}</td
-</tr><tr>
-<td>Last new connection</td><td>${lastConnection}</td>
-</tr><tr>
-<td>online users</td><td>${userupdate()}</td>
-</tr><tr>
-<td>Raw data</td><td>${JSONconfig}</td>
-</tr>
-</tbody></table>`)}
-
-
-
-
-
-
-
-
-
-
-let currentUsers =  userupdate()
-
 function newUserAnalytic(){
         lastConnection = logger.date("YMDHMS")
 }
@@ -96,6 +48,7 @@ function newUserAnalytic(){
 
 
 io.on('connection', (socket) => {
+    let currentUsers =  userupdate()
 
     newUserAnalytic()
     //broadcasts that a new user has joined
@@ -183,9 +136,72 @@ setTimeout(()=>{
     }
 
     // start the http server
-    http.listen(server_config.server_port, () => {
+    server.listen(server_config.server_port, () => {
         spinner.stop();
         logger.message_nl(`Server listening on ${ip}:${server_config.server_port}\nGo to http://${ip}:${server_config.server_port} for live analytics`, 'green')
     })
+
+
+    app.get('/', function (req, res) {
+        let currentUsers =  userupdate()
+        res.render(__dirname + '/res/index.ejs', {
+            name: name,
+            description: description,
+            website: website,
+            maxLength: maxLength,
+            location: location,
+            currentUsers: currentUsers,
+            JSONconfig: JSONconfig
+        });
+        res.end()
+    });
+
+    app.get('/api/:data', function (req, res) {
+        let currentUsers =  userupdate()
+        let data = req.params.data;
+
+        if (other_config.Do_not_log === false && other_config.show_time === false) {
+            logger.message_nl(`New api request (request = ${data})`, other_config.api_request_color)
+
+        }
+        else if (other_config.Do_not_log === false && other_config.show_time === true) {
+            logger.message_nl(`${logger.date("YMDHMS")} New api request (request = ${data})`, other_config.api_request_color)
+
+        }
+
+        if (data === "server_name"){
+            res.send(name);
+            res.end()
+        }
+
+        else if(data === "server_description"){
+            res.send(description);
+            res.end()
+        }
+        else if(data === "server_website"){
+            res.send(website);
+            res.end()
+        }
+        else if(data === "server_message_maxLength"){
+            res.send(String(maxLength));
+            res.end()
+        }
+        else if(data ===  "server_location"){
+            res.send(location);
+            res.end()
+        }
+        else if(data === "server_language"){
+            res.send(language);
+            res.end()
+        }
+
+        else{
+            res.send(JSONconfig);
+            res.end()
+        }
+    })
+
+
+    app.use('/static', express.static('node_modules'));
 
 },1000)
