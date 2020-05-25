@@ -15,40 +15,43 @@
             font-weight:normal;overflow:hidden;padding:10px 20px;word-break:normal;}
         .tg .tg-fuxe{border-color:inherit;font-size:18px;text-align:left;vertical-align:top}
     </style>
-    <table class="tg" style="undefined;table-layout: fixed; width: 548px">
+<div style="align-content: center">
+    <table class="tg" style="undefined;table-layout: fixed; width: 548px; margin-left: auto; margin-right: auto">
         <colgroup>
         <col style="width: 238px">
         <col style="width: 310px">
-    </colgroup>
-        <thead>
-    <tr>
+        </colgroup>
+            <thead>
+        <tr>
         <th class="tg-fuxe">Server name</th>
         <th class="tg-fuxe"> <%= name %></th>
     </tr>
-    </thead>
+        </thead>
         <tbody>
-    <tr>
-        <td class="tg-fuxe">Description</td>
-        <td class="tg-fuxe"><%= description%></td>
-    </tr>
-    <tr>
+            <tr>
+                <td class="tg-fuxe">Description</td>
+                <td class="tg-fuxe"><%= description%></td>
+            </tr>
+            <tr>
         <td class="tg-fuxe">Website</td>
         <td class="tg-fuxe"><%= website%></td>
     </tr>
-    <tr>
-        <td class="tg-fuxe">max message length</td>
-        <td class="tg-fuxe"><%= maxLength%></td>
-    </tr>
-    <tr>
+            <tr>
+                <td class="tg-fuxe">max message length</td>
+                <td class="tg-fuxe"><%= maxLength%></td>
+            </tr>
+            <tr>
         <td class="tg-fuxe">location</td>
         <td class="tg-fuxe"><%= location%></td>
     </tr>
-    <tr>
+            <tr>
         <td class="tg-fuxe">online users</td>
         <td class="tg-fuxe"><%= currentUsers%></td>
     </tr>
 
-    </tbody>
+        </tbody>
     </table>
+</div>
+    <div style="padding: 5px; color: gray; text-align: center">Powered by talker-io</div>
 
 </body>

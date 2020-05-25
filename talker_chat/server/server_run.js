@@ -46,11 +46,12 @@ function newUserAnalytic(){
 
 
 
-
+// runs on a new connection to the server
 io.on('connection', (socket) => {
     let currentUsers =  userupdate()
 
     newUserAnalytic()
+
     //broadcasts that a new user has joined
     socket.broadcast.emit('newUser', {currentUsers: currentUsers});
 
@@ -74,8 +75,7 @@ io.on('connection', (socket) => {
         logger.message_nl(`${logger.date("YMDHMS")} New user connected. Total users ${userupdate()}`, other_config.new_connection_color, true);
     }
 
-
-
+    // runs when a message is received
     socket.on('message', (evt) => {
 
         let {cmd, username} = evt;
@@ -109,7 +109,7 @@ io.on('connection', (socket) => {
     });
 
 
-
+    // runs when a user disconnected
     socket.on('disconnect', (data) => {
         currentUsers = userupdate()
         if (other_config.Do_not_log === false && other_config.show_time === false) {
@@ -130,18 +130,19 @@ io.on('connection', (socket) => {
 
 
 setTimeout(()=>{
-    // runs if the language in config is empty
+
+    // change the language to "en" if it is undefined
     if(typeof(language) === undefined || language === ""){
         language = 'en'
     }
 
-    // start the http server
+    // talker-io server
     server.listen(server_config.server_port, () => {
         spinner.stop();
         logger.message_nl(`Server listening on ${ip}:${server_config.server_port}\nGo to http://${ip}:${server_config.server_port} for live analytics`, 'green')
     })
 
-
+    // analytics server
     app.get('/', function (req, res) {
         let currentUsers =  userupdate()
         res.render(__dirname + '/res/index.ejs', {
@@ -156,6 +157,7 @@ setTimeout(()=>{
         res.end()
     });
 
+    // api
     app.get('/api/:data', function (req, res) {
         let currentUsers =  userupdate()
         let data = req.params.data;
@@ -163,45 +165,40 @@ setTimeout(()=>{
         if (other_config.Do_not_log === false && other_config.show_time === false) {
             logger.message_nl(`New api request (request = ${data})`, other_config.api_request_color)
 
-        }
-        else if (other_config.Do_not_log === false && other_config.show_time === true) {
+        } else if (other_config.Do_not_log === false && other_config.show_time === true) {
             logger.message_nl(`${logger.date("YMDHMS")} New api request (request = ${data})`, other_config.api_request_color)
 
         }
 
+
         if (data === "server_name"){
             res.send(name);
-            res.end()
-        }
-
-        else if(data === "server_description"){
+            res.end();
+        } else if(data === "server_description"){
             res.send(description);
-            res.end()
-        }
-        else if(data === "server_website"){
+            res.end();
+        } else if(data === "server_website"){
             res.send(website);
-            res.end()
-        }
-        else if(data === "server_message_maxLength"){
+            res.end();
+        } else if(data === "server_message_maxLength"){
             res.send(String(maxLength));
-            res.end()
-        }
-        else if(data ===  "server_location"){
+            res.end();
+        } else if(data ===  "server_location"){
             res.send(location);
-            res.end()
-        }
-        else if(data === "server_language"){
+            res.end();
+        } else if(data === "server_language"){
             res.send(language);
-            res.end()
-        }
-
-        else{
+            res.end();
+        }else if(data === "info"){
             res.send(JSONconfig);
-            res.end()
+            res.end();
+        }else{
+            res.send(JSONconfig);
+            res.end();
         }
     })
 
-
+    // node modules
     app.use('/static', express.static('node_modules'));
 
 },1000)

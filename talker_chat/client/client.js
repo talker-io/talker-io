@@ -1,27 +1,31 @@
-const config = require('./config')
 const ora = require('ora');
 const spinner = ora("Loading client").start();
-const validator = require('./modules/connectionValidator');
-
 const repl = require('repl');
-const logger = require('./modules/talker_logger');
 const notification = require('node-notifier');
-let username = null
-let options = null
+
+// custom modules
+const config = require('./config')
+const validator = require('./modules/connectionValidator');
+const logger = require('./modules/talker_logger');
 const prompt = require("prompts")
 const promptTemplates = require("./modules/promptTemplates")
 
+// request
+const request = require('request')
+
+// command line arguments
+let username = null
+let options = null
 username = process.argv[2]
 options = process.argv[3]
 
-
+// starts spinner
 spinner.color = "cyan";
 
 
 // main function
 function main(socket, serverdata) {
 
-    spinner.stop()
 
     //Sends disconnect message
     socket.on('disconnect', function () {
@@ -76,26 +80,28 @@ function main(socket, serverdata) {
 
 // connection check
 async function connectionCheck(socket) {
-    socket.on('connection_info', (data) => {
+
+    request(`${config.server_ip}/api/info`, { json: true }, (err, res, data) => {
+        if (err) { return logger.message_nl(err, 'red'); }
+
+        let server_name = data.server_name;
+        let server_description = data.server_description;
+        let server_maxLength = data.server_message_maxLength;
+        let server_website = data.server_website;
+        const datajson = JSON.stringify(data)
 
         //runs if data form server is invalid
         if (validator.validate(data) === false){
 
             //runs when data is invalid
-            spinner.stop()
-            logger.message_nl('The server you are trying to connect\nis sending information that is invalid\nor is sending data thats too big\nPlease proceed with caution\n', 'magenta');
+            logger.message_nl('The server you are trying to connect\nis sending information that is invalid\nor sending data that\'s too big\nPlease proceed with caution\n', 'magenta');
 
 
             (async () => {
                 const response = await prompt(promptTemplates.proceed);
                 if (response.value === true) {
-                    let server_name = data.name;
-                    let server_description = data.description;
-                    let server_maxLength = data.maxLength;
-                    let server_website = data.website;
 
-
-                    logger.message_nl(`\n=== Welcome to ${server_name} ===\n  ${server_description}\nType your message and press Enter to send\n`, 'yellow');
+                    logger.message_nl(`\n==== Welcome to ${server_name} ====\n  ${server_description}\nType your message and press Enter to send\n`, 'yellow');
 
                     // if server has a website display
                     if (server_website === "") {}
@@ -122,23 +128,18 @@ async function connectionCheck(socket) {
 
         // runs when data from server is valid
         else{
-            spinner.stop()
-            let server_name = data.name;
-            let server_description = data.description;
-            let server_maxLength = data.maxLength;
-            let server_website = data.website;
-            const datajson = JSON.stringify(data)
-            logger.message_nl(`\n=== Welcome to ${server_name} ===\n  ${server_description}\nType your message and press Enter to send\n`, 'yellow');
 
-            // if server has a website display
-            if (server_website === "") {}
+            logger.message_nl(`\n==== Welcome to ${server_name} ====\n${server_description}\nType your message and press Enter to send\n`, 'yellow');
+
+            // if server has a website display the website
+            if (server_website === ""){}
             else {
                 logger.message_nl(`Website: ${server_website}\n`, 'yellow')
             }
 
             // if servers max length is under 10 display max length to user
             if (server_maxLength < 10){
-                logger.message_nl(`This servers max message size is ${server_maxLength}`)
+                logger.message_nl(`This servers max message size is ${server_maxLength}\nyour messages will be limited to this size`, 'magenta');
             }
             else{}
 
@@ -148,7 +149,11 @@ async function connectionCheck(socket) {
 
 
         }
+
     })
+
+/*    socket.on('connection_info', (data) => {
+*/
 }
 
 // options
@@ -290,7 +295,7 @@ function option(socket, data){
 
 }
 
-
+spinner.stop()
 setTimeout(()=>{
     spinner.text = "connecting to server"
     const socket = require('socket.io-client')(config.server_ip);
