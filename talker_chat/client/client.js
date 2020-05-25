@@ -10,7 +10,6 @@ let username = null
 let options = null
 const prompt = require("prompts")
 const promptTemplates = require("./modules/promptTemplates")
-const ipLocation = require("ip-location")
 
 username = process.argv[2]
 options = process.argv[3]

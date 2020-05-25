@@ -11,73 +11,99 @@ const terminal = require('terminal-kit').terminal;
 //logger (without new line)
 function message(text, color) {
 
-    if (text == undefined) {
+    if (typeof (text) === undefined){
         terminal.red("WARNING undefined")
-    } else if (color == undefined) {
+    }
+    else if (typeof (color) === undefined) {
         terminal.red("WARNING undefined")
-    } else if (color === "red") {
+    }
+    else if (color === "red") {
         terminal.red(text);
-    } else if (color === "blue") {
+    }
+    else if (color === "blue") {
         terminal.blue(text);
-    } else if (color === "green") {
+    }
+    else if (color === "green") {
         terminal.green(text);
-    } else if (color === "yellow") {
+    }
+    else if (color === "yellow") {
         terminal.yellow(text);
-    } else if (color === "black") {
+    }
+    else if (color === "black") {
         terminal.black(text);
-    } else if (color === "white") {
+    }
+    else if (color === "white") {
         terminal.white(text);
-    } else if (color === "bold") {
+    }
+    else if (color === "bold") {
         terminal.bold(text);
-    } else if (color === "none") {
+    }
+    else if (color === "none") {
         terminal.defaultColor(text);
-    } else if (color === "cyan") {
+    }
+    else if (color === "cyan") {
         terminal.cyan(text);
-    } else if (color === "magenta") {
+    }
+    else if (color === "magenta") {
         terminal.magenta(text);
-    } else if (color === "gray") {
+    }
+    else if (color === "gray") {
         terminal.gray(text);
-    } else if (color === "pink") {
+    }
+    else if (color === "pink") {
         terminal.red.dim(text)
-    } else {
-        eventEmitter.emit('logger: unknown error');
+    }
+    else {
+        return "error"
     }
 }
 
 //logger (with new line)
 function message_nl(text, color) {
     text = text + '\n'
-    if (text == undefined) {
+    if (typeof(text) === undefined || typeof (color) === undefined) {
         terminal.red("WARNING undefined")
-    } else if (color == undefined) {
-        terminal.red("WARNING undefined")
-    } else if (color === "red") {
+    }
+    else if (color === "red") {
         terminal.red(text);
-    } else if (color === "blue") {
+    }
+    else if (color === "blue") {
         terminal.blue(text);
-    } else if (color === "green") {
+    }
+    else if (color === "green") {
         terminal.green(text);
-    } else if (color === "yellow") {
+    }
+    else if (color === "yellow") {
         terminal.yellow(text);
-    } else if (color === "black") {
+    }
+    else if (color === "black") {
         terminal.black(text);
-    } else if (color === "white") {
+    }
+    else if (color === "white") {
         terminal.white(text);
-    } else if (color === "bold") {
+    }
+    else if (color === "bold") {
         terminal.bold(text);
-    } else if (color === "none") {
+    }
+    else if (color === "none") {
         terminal.defaultColor(text);
-    } else if (color === "cyan") {
+    }
+    else if (color === "cyan") {
         terminal.cyan(text);
-    } else if (color === "magenta") {
+    }
+    else if (color === "magenta") {
         terminal.magenta(text);
-    } else if (color === "gray") {
+    }
+    else if (color === "gray") {
         terminal.gray(text);
-    } else if (color === "pink") {
+    }
+    else if (color === "pink") {
         terminal.red.dim(text)
-    } else {
+    }
+    else {
         eventEmitter.emit('logger: unknown error');
     }
+
 }
 
 
@@ -90,14 +116,14 @@ function date(data){
     let minutes = date_ob.getMinutes()
     let seconds = date_ob.getSeconds()
 
-    if (date == undefined){return 'undefined'}
-    else if ((data == "ymd") || (date == "yearmonthdate")){
+    if (date === undefined){return 'undefined'}
+    else if ((data === "ymd") || (date === "yearmonthdate") || (data === "YMD")){
         return(year + '-' + month + "-" + date)
     }
-    else if ((data == "ymdhms") || (data == "yearmonthdatetime")){
+    else if ((data === "ymdhms") || (data === "yearmonthdatetime") || (data === "YMDHMS")){
         return (year + '-' + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds)
     }
-    else if ((data == "hm") || (data == "hoursminutes")){
+    else if ((data === "hm") || (data === "hoursminutes") || (data === "HM")){
         return (hours + ":" + minutes)
     }
 }
