@@ -27,6 +27,12 @@ jobs:
     - run: |
             cd talker_chat
             cd server
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+            npm ci
+    - run: |
+            cd talker_chat
+            cd server
+            npm run build --if-present
+    - run: |
+            cd talker_chat
+            cd server
+            npm test
