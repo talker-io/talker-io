@@ -3,7 +3,7 @@ Server software for talker-io
 
 
 ## How to use
-You can run server by going into server folder and running server_run.js
+You can run the server by going into the server folder and running server_run.js
 with the command `node server_run.js`.
 
 ## configuring
