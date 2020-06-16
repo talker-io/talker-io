@@ -1,0 +1,12 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/talker_chat/client"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+- package-ecosystem: npm
+  directory: "/talker_chat/server"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
