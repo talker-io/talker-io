@@ -2,7 +2,7 @@
   "name": "talker-io-client",
   "version": "1.0.0",
   "dependencies": {
-    "node-notifier": "^7.0.0",
+    "node-notifier": "^7.0.1",
     "ora": "^4.0.4",
     "package.json": "^2.0.1",
     "prompts": "^2.3.2",
