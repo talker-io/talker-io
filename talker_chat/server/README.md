@@ -1,5 +1,5 @@
 ## **talker-io (server)**
-Server software for talker-io powered by socket io
+Software for talker-io server powered by socket io.
 
 
 ## How to use
