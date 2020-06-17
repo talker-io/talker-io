@@ -7,9 +7,12 @@ You can run the server by going into the server folder and running server_run.js
 with the command `node server_run.js`.
 
 ## configuring
-If you want you can edit the server_settings.js file to configure your server.
+There are two configuration files named other_settings and server_settings.
+The server_settings.js file contains the information about your server.
+The other_settings.js file contains other settings
+These files can be edited with any text editor to change the settings
 
-ROOM SETTINGS
+SERVER SETTINGS(server_settings.js)
 
 [1. room_name](#1-room_name)
 
@@ -23,7 +26,7 @@ ROOM SETTINGS
 
 
 
-LOGGER SETTINGS
+LOGGER SETTINGS(other_settings.js)
 
 [1. Do_not_log](#6-do_not_log)
 
