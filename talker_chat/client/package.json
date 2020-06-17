@@ -16,7 +16,7 @@
     "socket.io-client": "^2.3.0",
     "webpack": "^4.43.0",
     "webpack-node-externals": "^1.7.2"
-  }
+  },
   "license": "BSD-3-Clause"
   "author": "tarithj"
 }
