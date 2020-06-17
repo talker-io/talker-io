@@ -10,7 +10,7 @@ with the command `node server_run.js`.
 There are two configuration files named other_settings and server_settings.
 The server_settings.js file contains the information about your server.
 The other_settings.js file contains other settings
-These files can be edited to change the settings with a text editor
+These files can be edited with any text editor to change the settings
 
 SERVER SETTINGS(server_settings.js)
 
