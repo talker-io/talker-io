@@ -12,7 +12,7 @@ const ip = (myip(null, true));
 
 // config files
 const server_config = require('./server_settings.js');
-const other_config = require('./othersettings')
+const other_config = require('./other_settings.js')
 
 // config
 const name = server_config.server_name
