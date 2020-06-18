@@ -90,7 +90,7 @@ async function connectionCheck(socket) {
         let server_website = data.server_website;
         const datajson = JSON.stringify(data)
 
-        //runs if data form server is invalid
+        //runs if data from server is invalid
         if (validator.validate(data) === false){
 
             //runs when data is invalid
