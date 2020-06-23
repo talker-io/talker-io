@@ -22,7 +22,7 @@
     "body-parser": "^1.19.0",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
-    "mongoose": "^5.9.19",
+    "mongoose": "^5.9.20",
     "monitor.io": "^0.1.0",
     "morgan": "^1.10.0",
     "my-ip": "^1.1.1",
