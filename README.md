@@ -13,7 +13,7 @@ This repository contains the talker-io server and the talker-io client.
 
 ### Downloads
 [click here](https://github.com/tarithj/talker-io/releases/latest) to download the latest version of talker-io.  
-**or** 
+**or**   
 [click here](https://github.com/tarithj/talker-io/releases) to view old releases.
 
 
