@@ -16,4 +16,8 @@ This repository contains the talker-io server and the talker-io client.
 **or**   
 [click here](https://github.com/tarithj/talker-io/releases) to view old releases.
 
+### Installation
+Open the cli and navigate inside to the package you want to install.  
+run the command npm link
+then you can run talker-io from any where using `talker-io-client` for the client or `talker-io-server` to start the server
 
