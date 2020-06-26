@@ -8,11 +8,11 @@
 
 [![BSD-3-Clause](https://img.shields.io/github/license/tarithj/talker-io.svg)](https://github.com/tarithj/talker-io/blob/master/LICENSE)
 
-A simple command line LAN messaging software.
+A simple command line LAN messaging software.  
 This repository contains the talker-io server and the talker-io client.
 
 ### Downloads
-[click here](https://github.com/tarithj/talker-io/releases/latest) to download the latest version of talker-io.
+[click here](https://github.com/tarithj/talker-io/releases/latest) to download the latest version of talker-io.  
 or [click here](https://github.com/tarithj/talker-io/releases) to view old releases.
 
 
