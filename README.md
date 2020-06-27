@@ -20,7 +20,7 @@
 These can be downloaded from the [nodejs official website](nodejs.org).
 
 ### Installation
-Open the cli and navigate inside to the package you want to install.  
-run the command npm link
-then you can run talker-io from any where using `talker-io-client` for the client or `talker-io-server` to start the server
+Open the cli and navigate inside to the package you want to install ([click to learn hot to navigate using cd](https://www.computerhope.com/cdhlp.htm)).  
+Run the command `npm link`    
+Then you can run talker-io from any where using `talker-io-client` for the client or `talker-io-server` to start the server
 
