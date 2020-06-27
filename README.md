@@ -17,7 +17,7 @@
 ### Prerequesties
 * Node js  
 * NPM  
-These can be downloaded from the [nodejs official website](nodejs.org).
+These can be downloaded from the [nodejs official website](https://nodejs.org).
 
 ### Installation
 Open the cli and navigate inside to the package you want to install ([click to learn hot to navigate using cd](https://www.computerhope.com/cdhlp.htm)).  
