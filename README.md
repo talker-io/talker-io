@@ -15,7 +15,7 @@
 [click here](https://github.com/tarithj/talker-io/releases) to view old releases.
 
 ### Prerequesties
-* Node js  
+* Node js(^12.18.1)  
 * NPM  
 These can be downloaded from the [nodejs official website](https://nodejs.org).
 
