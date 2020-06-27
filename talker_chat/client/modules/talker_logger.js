@@ -3,7 +3,6 @@ if (require.main === module){
     console.log("This module wont run by itself");
 }
 
-const date_ob = new Date()
 
 // requirements
 const terminal = require('terminal-kit').terminal;
@@ -11,9 +10,9 @@ const terminal = require('terminal-kit').terminal;
 //logger (without new line)
 function message(text, color) {
 
-    if (text == undefined) {
+    if (typeof(text) === undefined) {
         terminal.red("WARNING undefined")
-    } else if (color == undefined) {
+    } else if (typeof(color) === undefined) {
         terminal.red("WARNING undefined")
     } else if (color === "red") {
         terminal.red(text);
@@ -47,9 +46,9 @@ function message(text, color) {
 //logger (with new line)
 function message_nl(text, color) {
     text = text + '\n'
-    if (text == undefined) {
+    if (typeof(text) == undefined) {
         terminal.red("WARNING undefined")
-    } else if (color == undefined) {
+    } else if (typeof(color) == undefined) {
         terminal.red("WARNING undefined")
     } else if (color === "red") {
         terminal.red(text);
@@ -83,18 +82,20 @@ function message_nl(text, color) {
 
 //date
 function date(data){
-    let date = ("0" + date_ob.getDate()).slice(-2)
-    let month = (date_ob.getMonth()+1)
-    let year = date_ob.getFullYear()
-    let hours = date_ob.getHours()
-    let minutes = date_ob.getMinutes()
-    let seconds = date_ob.getSeconds()
+
+    let DateObj = new Date()
+    let date = ("0" + DateObj.getDate()).slice(-2)
+    let month = (DateObj.getMonth()+1)
+    let year = DateObj.getFullYear()
+    let hours = DateObj.getHours()
+    let minutes = DateObj.getMinutes()
+    let seconds = DateObj.getSeconds()
 
     if (date == undefined){return 'undefined'}
     else if ((data == "ymd") || (date == "yearmonthdate")){
         return(year + '-' + month + "-" + date)
     }
-    else if ((data == "ymdhms") || (data == "yearmonthdatetime")){
+    else if ((data == "ymdhms") || (data == "yearmonthdatetime") || (data =="YMDHMS")){
         return (year + '-' + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds)
     }
     else if ((data == "hm") || (data == "hoursminutes")){
