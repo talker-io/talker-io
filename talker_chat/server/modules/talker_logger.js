@@ -93,13 +93,13 @@ function date(data){
 
     if (date === undefined){return 'undefined'}
     else if ((data === "ymd") || (date === "yearmonthdate")){
-        return(year + '-' + month + "-" + date)
+        return(year + '-' + month + "-" + date);
     }
     else if ((data === "ymdhms") || (data === "yearmonthdatetime") || (data ==="YMDHMS")){
-        return (year + '-' + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds)
+        return (year + '-' + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
     }
     else if ((data === "hm") || (data === "hoursminutes")){
-        return (hours + ":" + minutes)
+        return (hours + ":" + minutes);
     }
 }
 module.exports = {message, message_nl, date};
