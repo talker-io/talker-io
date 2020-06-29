@@ -38,7 +38,7 @@ function userupdate() {
 }
 
 
-function newUserAnalytic(){
+function UpdatelastConnection(){
         lastConnection = logger.date("YMDHMS");
 }
 
@@ -46,9 +46,9 @@ function newUserAnalytic(){
 
 // runs on a new connection to the server
 io.on("connection", (socket) => {
-    let currentUsers =  userupdate();
 
-    newUserAnalytic();
+    let currentUsers =  userupdate();
+    UpdatelastConnection();
 
     //broadcasts that a new user has joined
     socket.broadcast.emit("newUser", {currentUsers: currentUsers});
@@ -62,7 +62,6 @@ io.on("connection", (socket) => {
         location: location,
         language: language,
         userCount: currentUsers
-
     });
 
 
@@ -114,7 +113,7 @@ io.on("connection", (socket) => {
             logger.message_nl(`A user disconnected. Total users ${userupdate()}`, other_config.disconnect_color);
             socket.broadcast.emit("userDisconnected", {currentUsers: currentUsers});
 
-        } else if (other_config.Do_not_log === false && other_config.show_time === true) {
+        }else if (other_config.Do_not_log === false && other_config.show_time === true) {
             logger.message_nl(`${logger.date("ymdhms")} A user disconnected. Total users ${userupdate()}`, other_config.disconnect_color);
             socket.broadcast.emit("userDisconnected", {currentUsers: currentUsers});
         }
@@ -130,10 +129,9 @@ io.on("connection", (socket) => {
 setTimeout(()=>{
 
     // change the language to "en" if it is undefined
-    if(typeof(language) === undefined || language === ""){
+    if(language === undefined || language === ""){
         language = "en";
     }
-
 
     // talker-io server
     server.listen(server_config.server_port, () => {
@@ -208,7 +206,5 @@ setTimeout(()=>{
 
     });
 
-    // node modules
-    app.use("/static", express.static("node_modules"));
 
 },1)
