@@ -171,32 +171,41 @@ setTimeout(()=>{
 
         }
 
-
-        if (data === "server_name"){
+        switch (data) {
+          case "server_name":
             res.send(name);
             res.end();
-        } else if(data === "server_description"){
+            break;
+
+          case "server_description":
             res.send(description);
             res.end();
-        } else if(data === "server_website"){
+            break;
+          case "server_website":
             res.send(website);
             res.end();
-        } else if(data === "server_message_maxLength"){
+            break;
+          case  "server_message_maxLength":
             res.send(String(maxLength));
             res.end();
-        } else if(data ===  "server_location"){
+            break;
+          case "server_location":
             res.send(location);
             res.end();
-        } else if(data === "server_language"){
+            break;
+          case "server_language":
             res.send(language);
             res.end();
-        }else if(data === "info"){
+            break;
+          case "info":
             res.send(JSONconfig);
             res.end();
-        }else{
+            break;
+          default:
             res.send(JSONconfig);
             res.end();
         }
+
     });
 
     // node modules
