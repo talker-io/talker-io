@@ -37,7 +37,6 @@ function userupdate() {
     return JSON.stringify(Object.keys(io.sockets.connected).length);
 }
 
-
 function UpdatelastConnection(){
         lastConnection = logger.date("YMDHMS");
 }
