@@ -10,9 +10,9 @@ const terminal = require('terminal-kit').terminal;
 //logger (without new line)
 function message(text, color) {
 
-    if (typeof(text) === undefined) {
+    if (text === undefined) {
         terminal.red("WARNING undefined")
-    } else if (typeof(color) === undefined) {
+    } else if (color === undefined) {
         terminal.red("WARNING undefined")
     } else if (color === "red") {
         terminal.red(text);
@@ -46,9 +46,9 @@ function message(text, color) {
 //logger (with new line)
 function message_nl(text, color) {
     text = text + '\n'
-    if (typeof(text) == undefined) {
+    if (text === undefined) {
         terminal.red("WARNING undefined")
-    } else if (typeof(color) == undefined) {
+    } else if (color === undefined) {
         terminal.red("WARNING undefined")
     } else if (color === "red") {
         terminal.red(text);
@@ -82,8 +82,8 @@ function message_nl(text, color) {
 
 //date
 function date(data){
-
     let DateObj = new Date()
+
     let date = ("0" + DateObj.getDate()).slice(-2)
     let month = (DateObj.getMonth()+1)
     let year = DateObj.getFullYear()

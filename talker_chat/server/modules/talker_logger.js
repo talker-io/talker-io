@@ -12,7 +12,7 @@ function message(text, color) {
 
     if (text === undefined) {
         terminal.red("WARNING undefined")
-    } else if (typeof(color) === undefined) {
+    } else if (color === undefined) {
         terminal.red("WARNING undefined")
     } else if (color === "red") {
         terminal.red(text);
