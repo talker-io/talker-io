@@ -161,20 +161,11 @@ setTimeout(()=>{
         let currentUsers =  userupdate();
         let data = req.params.data;
 
-        if (other_config.Do_not_log === false && other_config.show_time === false) {
-            logger.message_nl(`New api request (request = ${data})`, other_config.api_request_color);
-
-        } else if (other_config.Do_not_log === false && other_config.show_time === true) {
-            logger.message_nl(`${logger.date("YMDHMS")} New api request (request = ${data})`, other_config.api_request_color);
-
-        }
-
         switch (data) {
           case "server_name":
             res.send(name);
             res.end();
             break;
-
           case "server_description":
             res.send(description);
             res.end();
@@ -199,10 +190,24 @@ setTimeout(()=>{
             res.send(JSONconfig);
             res.end();
             break;
+          case "currentUsers":
+            res.send(currentUsers);
+            res.end();
+            break;
           default:
             res.send(JSONconfig);
             res.end();
         }
+
+        if (other_config.Do_not_log === false && other_config.show_time === false) {
+            logger.message_nl(`New api request (request = ${data})`, other_config.api_request_color);
+
+        }else if (other_config.Do_not_log === false && other_config.show_time === true) {
+            logger.message_nl(`${logger.date("YMDHMS")} New api request (request = ${data})`, other_config.api_request_color);
+
+        }
+
+
 
     });
 
