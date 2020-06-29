@@ -1,9 +1,6 @@
 #!/usr/bin/env node
 
-// loading spinner
-const ora = require("ora");
-const spinner = ora("Starting talker.io server").start();
-spinner.color = "cyan"
+
 
 // logger module
 const logger = require("./modules/talker_logger");
@@ -137,11 +134,11 @@ setTimeout(()=>{
         language = "en";
     }
 
+
     // talker-io server
     server.listen(server_config.server_port, () => {
-        spinner.stop();
         logger.message_nl(`Server listening on ${ip}:${server_config.server_port}\nGo to http://${ip}:${server_config.server_port} for live analytics`, "green");
-    })
+    });
 
     // analytics server
     app.get("/", function (req, res) {
@@ -200,9 +197,9 @@ setTimeout(()=>{
             res.send(JSONconfig);
             res.end();
         }
-    })
+    });
 
     // node modules
     app.use("/static", express.static("node_modules"));
 
-},1000)
+},1)
