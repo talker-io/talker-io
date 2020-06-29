@@ -11,9 +11,9 @@ const terminal = require('terminal-kit').terminal;
 function message(text, color) {
 
     if (text === undefined) {
-        terminal.red("WARNING undefined")
+        terminal.red("WARNING undefined");
     } else if (color === undefined) {
-        terminal.red("WARNING undefined")
+        terminal.red("WARNING undefined");
     } else if (color === "red") {
         terminal.red(text);
     } else if (color === "blue") {
@@ -47,9 +47,9 @@ function message(text, color) {
 function message_nl(text, color) {
     text = text + '\n'
     if (text === undefined) {
-        terminal.red("WARNING undefined")
+        terminal.red("WARNING undefined");
     } else if (color === undefined) {
-        terminal.red("WARNING undefined")
+        terminal.red("WARNING undefined");
     } else if (color === "red") {
         terminal.red(text);
     } else if (color === "blue") {
@@ -73,7 +73,7 @@ function message_nl(text, color) {
     } else if (color === "gray") {
         terminal.gray(text);
     } else if (color === "pink") {
-        terminal.red.dim(text)
+        terminal.red.dim(text);
     } else {
         eventEmitter.emit('logger: unknown error');
     }
@@ -82,24 +82,24 @@ function message_nl(text, color) {
 
 //date
 function date(data){
-    let DateObj = new Date()
+    let DateObj = new Date();
 
-    let date = ("0" + DateObj.getDate()).slice(-2)
-    let month = (DateObj.getMonth()+1)
-    let year = DateObj.getFullYear()
-    let hours = DateObj.getHours()
-    let minutes = DateObj.getMinutes()
-    let seconds = DateObj.getSeconds()
+    let date = ("0" + DateObj.getDate()).slice(-2);
+    let month = (DateObj.getMonth()+1);
+    let year = DateObj.getFullYear();
+    let hours = DateObj.getHours();
+    let minutes = DateObj.getMinutes();
+    let seconds = DateObj.getSeconds();
 
-    if (date == undefined){return 'undefined'}
-    else if ((data == "ymd") || (date == "yearmonthdate")){
+    if (date === undefined){return 'undefined'}
+    else if ((data === "ymd") || (date === "yearmonthdate")){
         return(year + '-' + month + "-" + date)
     }
-    else if ((data == "ymdhms") || (data == "yearmonthdatetime") || (data =="YMDHMS")){
+    else if ((data === "ymdhms") || (data === "yearmonthdatetime") || (data ==="YMDHMS")){
         return (year + '-' + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds)
     }
-    else if ((data == "hm") || (data == "hoursminutes")){
+    else if ((data === "hm") || (data === "hoursminutes")){
         return (hours + ":" + minutes)
     }
 }
-module.exports = {message, message_nl, date}
+module.exports = {message, message_nl, date};
