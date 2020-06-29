@@ -34,7 +34,7 @@ const io = require("socket.io")(server);
 const JSONconfig = JSON.stringify(server_config);
 
 function userupdate() {
-    return Object.keys(io.sockets.connected).length;
+    return JSON.stringify(Object.keys(io.sockets.connected).length);
 }
 
 
