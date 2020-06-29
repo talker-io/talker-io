@@ -91,14 +91,14 @@ function date(data){
     let minutes = DateObj.getMinutes();
     let seconds = DateObj.getSeconds();
 
-    if (date == undefined){return 'undefined'}
-    else if ((data == "ymd") || (date == "yearmonthdate")){
+    if (date === undefined){return 'undefined'}
+    else if ((data === "ymd") || (date === "yearmonthdate")){
         return(year + '-' + month + "-" + date)
     }
-    else if ((data == "ymdhms") || (data == "yearmonthdatetime") || (data =="YMDHMS")){
+    else if ((data === "ymdhms") || (data === "yearmonthdatetime") || (data ==="YMDHMS")){
         return (year + '-' + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds)
     }
-    else if ((data == "hm") || (data == "hoursminutes")){
+    else if ((data === "hm") || (data === "hoursminutes")){
         return (hours + ":" + minutes)
     }
 }
