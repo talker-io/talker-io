@@ -223,7 +223,6 @@ async function connectionCheck(socket) {
     request(`${config.server_ip}/api/info`, { json: true }, (err, res, data) => {
 
             if (err) {
-                console.log(err.code)
                 switch (err.code) {
                     case "ECONNREFUSED":
                         error.requestECONNREFUSED(err)
