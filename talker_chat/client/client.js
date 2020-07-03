@@ -78,12 +78,6 @@ function main(socket, serverData) {
         logger.message_nl(`${username} left. Total users ${currentUsers}`, "red");
     })
 
-    socket.on("connect_failed", function(){
-        logger.message("The server shutdown unexpectedly", "red");
-        process.exit();
-    });
-
-
 }
 
 // options (step 2)
