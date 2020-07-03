@@ -4,6 +4,8 @@
   "bin": {
     "talker-io-client": "./client.js"
   },
+  "scripts": {
+  },
   "dependencies": {
     "node-notifier": "^7.0.1",
     "ora": "^4.0.4",

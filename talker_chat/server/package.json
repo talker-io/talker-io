@@ -9,9 +9,6 @@
   "pkg": {
     "scripts": "./modules/**/*.js"
   },
-  "scripts": {
-    "start": "npm start"
-  },
   "devDependencies": {
     "cors": "^2.8.5",
     "eslint": "^7.3.1",

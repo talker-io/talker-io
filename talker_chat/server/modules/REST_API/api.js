@@ -1,5 +1,5 @@
-Analytics = require("../analytics/analytics")
-const server_config = require("../../server_settings")
+const Analytics = require("../analytics/analytics")
+const server_config= require("../../server_settings")
 const name = server_config.server_name;
 const description = server_config.server_description;
 const website = server_config.server_website;

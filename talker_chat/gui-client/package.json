@@ -2,7 +2,7 @@
   "name": "talker-io-gui-client",
   "version": "1.0.0",
   "dependencies": {
-    "electron": "^9.0.0"
+
   },
   "description": "A gui client for talker-io",
   "main": "test.js",

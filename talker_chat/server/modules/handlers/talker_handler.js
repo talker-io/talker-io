@@ -37,18 +37,40 @@ function messageHandler(data, socket, io){
 }
 
 function disconnectHandler(data, socket, io){
+
     currentUsers = Analytics.userUpdate(io);
+    let username = data.username
+
     if (other_config.Do_not_log === false && other_config.show_time === false) {
-        logger.message_nl(`A user disconnected. Total users ${Analytics.userUpdate(io)}`, other_config.disconnect_color);
+        logger.message_nl(`${username} left. Total users ${Analytics.userUpdate(io)}`, other_config.disconnect_color);
 
     }else if (other_config.Do_not_log === false && other_config.show_time === true) {
-        logger.message_nl(`${logger.date("ymdhms")} A user disconnected. Total users ${Analytics.userUpdate(io)}`, other_config.disconnect_color);
+        logger.message_nl(`${logger.date("ymdhms")} ${username} left. Total users ${Analytics.userUpdate(io)}`, other_config.disconnect_color);
     }
-    socket.broadcast.emit("userDisconnected", {currentUsers: currentUsers});
+    socket.broadcast.emit("userDisconnected", {currentUsers: currentUsers, username: username});
 
+}
+
+// This function will be started on a new connection
+function onConnection(data, socket, io){
+
+}
+
+function onSuccessfulConnection(data, socket, io) {
+
+}
+function clientInfoHandler(data, socket, io){
+    logger.message_nl(data.username, "blue")
 }
 
 module.exports={
     messageHandler,
-    disconnectHandler
+    disconnectHandler,
+    onConnection,
+    onSuccessfulConnection,
+    clientInfoHandler
 };
+
+/*
+* talker-io is created by tarith jayasooriya
+*/
