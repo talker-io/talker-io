@@ -20,8 +20,16 @@
 These can be downloaded from the [nodejs official website](https://nodejs.org).
 
 ### Installation
-Open the cli and navigate inside to the package you want to install ([click to learn how to navigate using cd](https://www.computerhope.com/cdhlp.htm)).  
-Run the command `npm link`    
-Then you can run talker-io from anywhere using `talker-io-client` for the client or `talker-io-server` to start the server
+
+#### Installing talker-io server
+Open the cli and navigate to talker-io/talker_chat/server ([click to learn how to navigate using cd](https://www.computerhope.com/cdhlp.htm)).  
+Run `npm link` this command will install the dependencies and syslink the file.     
+Then navigate to the settings folder on the same directory and edit the setting files.
+After that run `talker-io-server` in the cli to start the talker-io server according to the settings.
+
+#### Installing talker-io client
+Open the cli and navigate to talker-io/talker_chat/client ([click to learn how to navigate using cd](https://www.computerhope.com/cdhlp.htm)).  
+Run `npm link` this command will install the dependencies and syslink the file.     
+Then read the README.md   
 
 

@@ -1,7 +1,7 @@
 const customErrorMessageList = require("./error_message")
 const logger = require("../../talker_logger")
 
-function requestECONNREFUSED(err){
+function requestECONNREFUSED(err) {
     const errorCode = err.code;
     const errorMessage = err.message;
     const customErrorMessage = customErrorMessageList.ECONNREFUSED;
@@ -10,10 +10,6 @@ function requestECONNREFUSED(err){
 }
 
 
-
 module.exports = {
     requestECONNREFUSED
 }
-/*
-* talker-io is created by tarith jayasooriya
-*/

@@ -1,11 +1,6 @@
 # talker-io (server)
 Software for talker-io server powered by socket io.
 
-
-## How to use
-You can run the server by going into the server folder and running server_run.js   
-with the command `node server_run.js`.
-
 ## configuring
 There are two configuration files named other_settings and server_settings.  
 The server_settings.js file contains the information about your server.  

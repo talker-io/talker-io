@@ -103,3 +103,4 @@ function date(data){
     }
 }
 module.exports = {message, message_nl, date};
+
