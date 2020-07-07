@@ -55,8 +55,9 @@ function main(socket, serverData) {
         const {message, user} = data.message;
         const {name, id} = user;
 
-        const private = data.private
-        if(private){
+        const privateMessage = data.private
+
+        if(privateMessage){
             logger.message(name +  " " + id + " private" + ": " + message.split("\n")[0] + "\n", "green");
 
         }

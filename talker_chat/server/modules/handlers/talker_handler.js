@@ -24,7 +24,6 @@ function messageHandler(data, connectionName, socket, io, functions){
 
     let message
     let fullMessage;
-    console.log(enteredRename)
 
     try {
 
