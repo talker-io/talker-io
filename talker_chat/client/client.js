@@ -66,8 +66,7 @@ function main(socket, serverData) {
         }
 
         // notifications
-        var notification_message = (`${name}: ${message}`);
-        notification_message = notification_message.substring(0, notification_message.length - 1);
+        let notification_message = (`${name}: ${message.split("\n")[0]}`);
         notification.notify({
             title: `talker.io ${serverData.server_name}`,
             message: notification_message,

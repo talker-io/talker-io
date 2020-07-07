@@ -4,6 +4,8 @@ const advanceOptions = require("../../settings/advance_settings");
 const logger = require("../talker_logger");
 const maxLength = serverOptions.server_message_maxLength;
 const Analytics = require("../analytics/analytics");
+const fs = require("fs");
+
 
 let currentUsers = 0;
 
@@ -12,15 +14,23 @@ let currentUsers = 0;
 let renameRegexp = /^@rename\s([0-9A-Za-z_]*)/;
 let myNameRegexp = /^@myname/;
 let privateRegexp = /^@private\s([0-9A-Za-z_]*)\s([0-9A-Za-z_\s]*)/;
+let myIdRegexp = /^@myid/;
+let enterPrivateRegexp = /^@enterprivate\s([0-9A-Za-z_]*)/
+let exitPrivateRegexp = /^@exitprivate\s([0-9A-Za-z_]*)/
 
-function messageHandler(data, connectionName, socket, io, functions){
+function messageHandler(data, connectionName, socket, io, functions, misc){
+    const {stayPrivate} = misc
     const {cmd} = data;
     const changeConnectionName = functions.changeConnectionName
+    const toggleStayPrivate = functions.toggleStayPrivate
     const connectedUserNames = functions.connectedUserNames;
 
     let enteredRename = renameRegexp.test(cmd);
     let enteredMyName = myNameRegexp.test(cmd);
     let enteredPrivate = privateRegexp.test(cmd);
+    let enteredMyId = myIdRegexp.test(cmd);
+    let enteredEnterPrivate = enterPrivateRegexp.test(cmd);
+    let enteredExitPrivate = exitPrivateRegexp.test(cmd);
 
     let message
     let fullMessage;
@@ -41,13 +51,28 @@ function messageHandler(data, connectionName, socket, io, functions){
             }
             else if(enteredPrivate){
                 let receiver = cmd.match(privateRegexp)[1];
-                let message = cmd.match(privateRegexp)[2].substring(0, maxLength).trim();
+                let message = cmd.match(privateRegexp)[2].substring(0, maxLength).trim()
 
                 if (message !== ""){
+
                     fullMessage = {message: message, user: {name: connectionName, id: socket.id}}
                     io.to(receiver).emit("message", {message: fullMessage, private: true});
                     io.to(socket.id).emit("message", {message: {message: `private message sent to ${receiver}`, user: {name:"SERVER", id:"SERVER"}}, private: true});
                 }
+            }
+            else if(enteredMyId){
+                io.to(socket.id).emit("message", {message: {message: `your id is ${socket.id}`, user: {name:"SERVER", id:"SERVER"}}, private: true});
+
+            }
+            else if(enteredEnterPrivate){
+                let receiver = cmd.match(enterPrivateRegexp)[1];
+                toggleStayPrivate(receiver);
+                io.to(socket.id).emit("message", {message: {message: `every message you type will be sent to ${receiver} type @exitprivate to exit the private chat`, user: {name:"SERVER", id:"SERVER"}}, private: true});
+
+            }
+            else if(enteredExitPrivate){
+                toggleStayPrivate(null)
+                io.to(socket.id).emit("message", {message: {message: `Exited private chat`, user: {name:"SERVER", id:"SERVER"}}, private: true});
             }
             else {
 
@@ -61,8 +86,15 @@ function messageHandler(data, connectionName, socket, io, functions){
 
 
                     setTimeout(() => {
-                        // broadcasts the message
-                        socket.broadcast.emit("message", {message: fullMessage, private: false});
+                        if(stayPrivate === null){
+                            // broadcasts the message
+                            socket.broadcast.emit("message", {message: fullMessage, private: false});
+                        }
+                        else{
+                            // send the message
+                            io.to(stayPrivate).emit("message", {message:fullMessage, private: true})
+                        }
+
 
                     }, advanceOptions.messageLatency);
 

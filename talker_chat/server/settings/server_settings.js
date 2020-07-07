@@ -6,7 +6,7 @@ if (require.main === module){
 // server settings
 const server_name = 'testing server';
 const server_description = 'This is a demo description';
-const server_website = 'https://test.com';//enter server's website(OPTIONAL)
+const server_website = 'https://tarithj.github.io/talker-io';//enter server's website(OPTIONAL)
 const server_message_maxLength = 100;
 const server_port = "8000";
 const server_location = ""; // enter the location of the server(OPTIONAL)

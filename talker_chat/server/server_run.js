@@ -46,20 +46,25 @@ const handler = require("./modules/handlers/talker_handler");
 
 let firstUserDisconnected = false;
 
+
+
 function UpdateLastConnection(){
     lastConnection = logger.date("YMDHMS");
 }
 
 function onConnection(socket){
     let id = socket.id
+    let connectionName;
+    let stayPrivate = null;
 
     if(firstUserDisconnected === false){
         socket.disconnect();
         firstUserDisconnected = true
     }
 
-    let connectionName;
-
+    function toggleStayPrivate(id) {
+        stayPrivate = id;
+    }
     function changeConnectionName(name){
 
         if(name === "server" || name === "SERVER"){
@@ -84,6 +89,7 @@ function onConnection(socket){
 
     socket.on("clientInfo", (data) =>{
         connectionName = data.username;
+
 
         if(connectionName === "server" || connectionName === "SERVER"){
             connectionName = "AnonymousUser"
@@ -127,7 +133,10 @@ function onConnection(socket){
         socket.on("message", (data) => {
             handler.messageHandler(data, connectionName,socket, io, {
                 changeConnectionName,
+                toggleStayPrivate
 
+            },{
+                stayPrivate
             })
 
         })
@@ -153,7 +162,6 @@ function onConnection(socket){
     UpdateLastConnection();
 
 }
-
 
 // runs on a new connection to the server
 io.on("connection", (socket) => {
