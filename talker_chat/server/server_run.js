@@ -45,6 +45,7 @@ const io = require("socket.io")(server,{
 const handler = require("./modules/handlers/talker_handler");
 
 let firstUserDisconnected = false;
+
 function UpdateLastConnection(){
     lastConnection = logger.date("YMDHMS");
 }
@@ -56,8 +57,19 @@ function onConnection(socket){
         socket.disconnect();
         firstUserDisconnected = true
     }
+
     let connectionName;
-    let clientInfoReceived = false;
+
+    function changeConnectionName(name){
+
+        if(name === "server" || name === "SERVER"){
+            name = "AnonymousUser"
+        }
+        if (typeof (name) === "undefined"){
+            name = "AnonymousUser"
+        }
+        connectionName = name
+    }
 
     handler.onConnection({
         name,
@@ -71,8 +83,11 @@ function onConnection(socket){
     }, socket, io);
 
     socket.on("clientInfo", (data) =>{
-        clientInfoReceived = true;
         connectionName = data.username;
+
+        if(connectionName === "server" || connectionName === "SERVER"){
+            connectionName = "AnonymousUser"
+        }
         if (typeof (connectionName) === "undefined"){
             connectionName = "AnonymousUser"
         }
@@ -110,7 +125,10 @@ function onConnection(socket){
 
         // runs when a message is received
         socket.on("message", (data) => {
-            handler.messageHandler(data, connectionName, socket, io)
+            handler.messageHandler(data, connectionName,socket, io, {
+                changeConnectionName,
+
+            })
 
         })
 

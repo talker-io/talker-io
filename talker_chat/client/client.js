@@ -52,11 +52,20 @@ function main(socket, serverData) {
 
     // message
     socket.on("message", (data) => {
-        const {message, username} = data;
-        logger.message(username + ": " + message.split("\n")[0] + "\n", "green");
+        const {message, user} = data.message;
+        const {name, id} = user;
+
+        const private = data.private
+        if(private){
+            logger.message(name +  " " + id + " private" + ": " + message.split("\n")[0] + "\n", "green");
+
+        }
+        else{
+            logger.message(name + " " + id + ": " + message.split("\n")[0] + "\n", "green");
+        }
 
         // notifications
-        var notification_message = (`${username}: ${message}`);
+        var notification_message = (`${name}: ${message}`);
         notification_message = notification_message.substring(0, notification_message.length - 1);
         notification.notify({
             title: `talker.io ${serverData.server_name}`,
