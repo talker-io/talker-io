@@ -45,7 +45,7 @@ function messageHandler(data, connectionName, socket, io, functions){
                 let message = cmd.match(privateRegexp)[2].substring(0, maxLength).trim();
 
                 if (message !== ""){
-                    fullMessage = {message: message, username: connectionName}
+                    fullMessage = {message: message, user: {name: connectionName, id: socket.id}}
                     io.to(receiver).emit("message", {message: fullMessage, private: true});
                     io.to(socket.id).emit("message", {message: {message: `private message sent to ${receiver}`, user: {name:"SERVER", id:"SERVER"}}, private: true});
                 }
