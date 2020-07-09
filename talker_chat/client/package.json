@@ -15,7 +15,7 @@
     "gulp-sourcemaps": "^2.6.5",
     "socket.io-client": "^2.3.0",
     "webpack": "^4.43.0",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-node-externals": "^2.3.0"
   },
   "license": "BSD-3-Clause",
   "author": "tarithj"
